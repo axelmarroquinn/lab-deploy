@@ -1,0 +1,54 @@
+{
+  "info": {
+    "name": "Laboratorio Deploy - API Render",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://TU-SERVICIO.onrender.com" }
+  ],
+  "item": [
+    {
+      "name": "1. Bienvenida (GET /)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/" }
+    },
+    {
+      "name": "2. Salud (GET /health)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health" }
+    },
+    {
+      "name": "3. Listar productos (GET /api/productos)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/productos" }
+    },
+    {
+      "name": "4. Crear producto válido (POST 201)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Monitor\",\n  \"precio\": 1500\n}" },
+        "url": "{{baseUrl}}/api/productos"
+      }
+    },
+    {
+      "name": "5. Crear producto inválido (POST 400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"\",\n  \"precio\": -10\n}" },
+        "url": "{{baseUrl}}/api/productos"
+      }
+    },
+    {
+      "name": "6. Ruta inexistente (404)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/no-existe" }
+    },
+    {
+      "name": "7. JSON malformado (400 - middleware de errores)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ nombre: Monitor " },
+        "url": "{{baseUrl}}/api/productos"
+      }
+    }
+  ]
+}
